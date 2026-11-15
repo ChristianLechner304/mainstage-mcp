@@ -15,6 +15,18 @@ Sag deinem Assistenten *„Leg in meinem Band-Concert einen Patch für Jump von 
 > Änderung wird eine Sicherung angelegt, unbekannte Dateiaufbauten werden nicht verändert.
 > Wichtige Concerts trotzdem selbst sichern.
 
+## Werkzeuge
+
+| Werkzeug | Funktion |
+| --- | --- |
+| `find_sound` | „Wo finde ich einen Flötensound?“ – sucht in der Soundbibliothek, in den Channelstrips deiner Concerts, in exportierten Patch-Dateien und in Plug-in-Namen (deutsche und englische Instrumentennamen) |
+| `search_sounds`, `list_sound_categories` | Suche in der Logic/MainStage-Soundbibliothek |
+| `create_song_patch` | Neuer Patch mit Sounds, Tempo, Taktart, Transponierung, Fader/Pan/Mute |
+| `set_channel`, `set_patch_settings` | Fader, Pan, Mute bzw. Tempo, Taktart, Transponierung ändern |
+| `list_concerts`, `list_patches`, `get_patch` | Concerts und Patches auslesen |
+| `find_audio_files`, `add_playback` | Backing Tracks in einem beliebigen Ordner finden und als Playback einfügen |
+| `list_installed_plugins`, `mainstage_status` | Installierte Plug-ins, Status von MainStage |
+
 ## Voraussetzungen
 
 - macOS mit **MainStage 3** (Concerts ab MainStage 3.2 gespeichert)
@@ -81,6 +93,7 @@ den jeweiligen Ordner. Es sind keine persönlichen Pfade fest eingebaut.
    über den Assistenten auf, das Concert zu schließen; mit `wait_seconds` wartet er darauf.
 2. Beispiele:
    - *„Welche Patches hat mein Concert ‚Band 2026‘?“*
+   - *„Ich brauche einen Flötensound – wo finde ich einen?“*
    - *„Leg in ‚Band 2026‘ einen Patch für ‚Jump‘ von Van Halen an: Synth-Brass für das Riff, ein Lead fürs Solo (stumm), Fader auf 0 dB.“*
    - *„Stell das Solo in ‚Jump‘ auf −3 dB und heb die Stummschaltung auf.“*
    - *„Füg den Backing Track für ‚Jump‘ aus ~/Music/Playbacks als Playback hinzu, stumm.“*

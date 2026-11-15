@@ -15,7 +15,7 @@ except ImportError:  # MCP Python SDK 1.x
     from mcp.server.fastmcp import FastMCP as _Server
 from pydantic import BaseModel, Field
 
-from . import macos, playback
+from . import macos, playback, sources
 from .concert import Concert, ConcertError
 from .config import Config
 from .library import SoundLibrary, list_plugins
@@ -145,6 +145,31 @@ def search_sounds(query: Annotated[str, Field(description='Keywords, e.g. "rhode
     res = LIB.search(query, category, "Instrument", limit)
     return {"count": len(res), "sounds": [{"name": s.name, "category": s.category, "family": s.family, "rel": s.rel}
                                            for s in res]}
+
+
+@mcp.tool()
+def find_sound(query: Annotated[str, Field(description='What you are looking for, German or English, e.g. "Flöte", "flute", "warm pad", "Hammond"')],
+               limit: int = 15) -> dict:
+    """Where can I find a sound like this? Searches the sound library, the channel strips used in your
+    concerts, exported patch files and installed plug-in names. German/English instrument names work."""
+    lib = LIB.search(query, "", "", limit)
+    plugins = list_plugins(CFG.plugin_dirs)
+    result = {
+        "query": query,
+        "library": [{"name": s.name, "category": f"{s.kind}/{s.category}".strip("/"),
+                     "family": s.family, "rel": s.rel} for s in lib],
+        "in_your_concerts": sources.search_concerts(query, _concert_files(), limit),
+        "patch_files": sources.search_patch_files(query, CFG.concerts_dirs, limit),
+        "plugins_by_name": sources.search_plugins(query, plugins),
+        "sample_players_installed": [p["name"] for p in plugins
+                                     if any(k in p["name"].lower() for k in
+                                            ("kontakt", "halion", "keys", "sampletank", "omnisphere",
+                                             "keyscape", "numa", "pianoteq", "spitfire", "labs"))],
+    }
+    result["hint"] = ("Library sounds can be used directly in create_song_patch (use 'rel'). "
+                      "Sounds inside third-party sample players (e.g. Kontakt) cannot be searched; "
+                      "they are listed so you can suggest looking there.")
+    return result
 
 
 @mcp.tool()

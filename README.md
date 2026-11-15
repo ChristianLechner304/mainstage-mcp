@@ -23,6 +23,7 @@ Tell your assistant *"Add a patch for Jump by Van Halen to my band concert"* and
 | --- | --- |
 | `list_concerts` | Concerts in your concert folder(s) |
 | `list_patches`, `get_patch` | Patch list, tempo, channel strips with sound, dB, pan, mute, Playback file |
+| `find_sound` | "Where can I find a flute?" – searches the sound library, the channel strips in your concerts, exported patch files and plug-in names (German/English instrument names) |
 | `search_sounds`, `list_sound_categories` | Search the installed Logic/MainStage sound library |
 | `create_song_patch` | New patch with sounds, tempo, time signature, transpose, fader/pan/mute per channel |
 | `set_channel` | Change fader (dB), pan or mute of a channel strip |
@@ -105,6 +106,7 @@ any folder or file you mention in the chat. Nothing user-specific is hard-coded.
    tells the assistant to ask you to close it; with `wait_seconds` it waits until you have.
 2. Ask your assistant, e.g.:
    - *"Which patches are in my concert 'Band 2026'?"*
+   - *"I need a flute sound – where can I find one?"*
    - *"Add a patch for 'Jump' by Van Halen to 'Band 2026': synth brass for the riff, a lead for the solo (muted), faders at 0 dB."*
    - *"Set the solo lead in 'Jump' to -3 dB and unmute it."*
    - *"Add the backing track from ~/Music/Backing Tracks for 'Jump' as playback, muted."*

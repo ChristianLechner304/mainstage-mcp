@@ -9,8 +9,9 @@ from __future__ import annotations
 
 import os
 import plistlib
-import re
 import threading
+
+from . import synonyms
 from dataclasses import dataclass, asdict
 
 
@@ -85,7 +86,6 @@ class SoundLibrary:
 
     def search(self, query: str = "", category: str = "", kind: str = "Instrument",
                limit: int = 25) -> list[Sound]:
-        words = [w for w in re.split(r"\s+", query.lower().strip()) if w]
         cat = category.lower().strip()
         scored = []
         for s in self.sounds:
@@ -94,10 +94,12 @@ class SoundLibrary:
             hay_cat = s.category.lower()
             if cat and cat not in hay_cat:
                 continue
-            hay = f"{s.name} {s.category} {s.family}".lower()
-            if words and not all(w in hay for w in words):
+            ok, score = synonyms.matches(query, f"{s.name} {s.category} {s.family}")
+            if not ok:
                 continue
-            score = sum(3 if w in s.name.lower() else 1 for w in words)
+            ok_name, name_score = synonyms.matches(query, s.name)
+            if ok_name:
+                score += name_score
             if "legacy" in hay_cat:
                 score -= 2
             scored.append((-score, s.name, s))

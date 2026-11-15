@@ -64,3 +64,15 @@ def test_replace_file_ref_updates_sizes():
     assert ref.url == long_url and ref.bookmark == b"bookmark-data"
     assert 300 + struct.unpack_from("<I", new, 300)[0] == ref.offset + ref.length
     assert new.endswith(b"tail")
+
+
+def test_synonyms():
+    from mainstage_mcp import synonyms
+    assert synonyms.matches("Flöte", "Bright Flute Brass & Woodwind")[0]
+    assert synonyms.matches("orgel", "Classic Rock Organ")[0]
+    assert not synonyms.matches("ep", "Deep Pad")[0]
+    assert synonyms.matches("warmes pad", "Warm Synth Pad")[0] is False  # "warmes" is not a synonym
+    assert synonyms.matches("warm fläche", "Warm Synth Pad")[0]
+    assert not synonyms.matches("Glocken", "Bella Napoli")[0]
+    assert synonyms.matches("Glocke", "Toy Glockenspiel")[0]
+    assert synonyms.matches("flute", "Mellotron Flutes")[0]
