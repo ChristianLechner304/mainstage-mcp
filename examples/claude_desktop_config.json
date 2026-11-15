@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "mainstage": {
+      "command": "/Users/YOUR_USER/.mainstage-mcp/bin/mainstage-mcp",
+      "env": {
+        "MAINSTAGE_CONCERTS_DIR": "/Users/YOUR_USER/Music/MainStage"
+      }
+    }
+  }
+}
